@@ -1,13 +1,23 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
-import { AUTH_STRATEGY_TYPE } from '../constants';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+} from '@nestjs/common';
+import { User } from '@prisma/client';
+import { GetUser } from 'src/auth/decorator';
+import { JwtGuard } from 'src/auth/guard';
 
+@UseGuards(JwtGuard)
 @Controller('users')
 export class UserController {
-  @UseGuards(AuthGuard(AUTH_STRATEGY_TYPE))
-  @Get('me') // GET /users/me
-  getMe(@Req() req: Request) {
-    return 'current user';
+  @HttpCode(HttpStatus.OK)
+  // GET /users/me
+  @Get('me')
+  // we can pass data if we need to, to our GetUser deorator like this 'getMe(@GetUser('email') email: string)'
+  // the type User comes from our prisma schema
+  getMe(@GetUser() user: User) {
+    return user;
   }
 }
