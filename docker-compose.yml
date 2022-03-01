@@ -10,5 +10,15 @@ services:
       POSTGRES_DB: mytestdb
     networks:
       - awesomenetwork
+  test-db:
+    image: postgres:13
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: mytestdb
+    networks:
+      - awesomenetwork
 networks:
   awesomenetwork:
