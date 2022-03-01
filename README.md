@@ -64,7 +64,7 @@ npx prisma studio
 
 Run the below commands in the root folder of the project.
 
-Run the below command to start the docker container and run the migrations.
+Run the below command to start the docker container and run the migrations. With Windows use the bash terminal, VS code terminal might not like the sleep command.
 
 ```bash
 npm run dev:database:restart
@@ -80,4 +80,16 @@ Run the below command to start the dev server
 
 ```bash
 npm run start:dev
+```
+
+## Scripts specifics
+
+- for this script _test:prisma:deploy_ we will use the help of dotenv-cli dev dependency to use different env file.
+
+## Testing
+
+You can preview the test database with the following command
+
+```bash
+npx dotenv -e .env.test -- prisma studio
 ```
