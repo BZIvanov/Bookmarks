@@ -16,7 +16,7 @@ import { UserService } from './user.service';
 @UseGuards(JwtGuard)
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @HttpCode(HttpStatus.OK)
   // GET /users/me
