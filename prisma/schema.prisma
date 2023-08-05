@@ -23,6 +23,8 @@ model User {
   // this is our one-to-many relation
   bookmarks Bookmark[]
 
+  // this will map the 'User' database table name to 'users'
+  // by default the model will create the table name 'User'
   @@map("users")
 }
 

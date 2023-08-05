@@ -5,7 +5,7 @@ import { AuthDto } from './dto';
 @Controller('auth')
 export class AuthController {
   // we just need to specify our service as DI and NestJS will handle under the hood creating the instance and providing it to us
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @HttpCode(HttpStatus.CREATED) // this is the default status code for Post anyway
   @Post('signup')

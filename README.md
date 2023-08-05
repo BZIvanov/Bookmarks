@@ -1,20 +1,9 @@
 ## Installation
 
-```bash
-$ npm install
-```
-
-## Test
+Run the below command to install project dependencies packages.
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
 ## Docker
@@ -36,7 +25,7 @@ docker logs container-id-here
 
 #### VS Code extension
 
-Install the VS code prosma extension for syntax highlight and autocomplete.
+Install the VS code prisma extension for syntax highlight and autocomplete.
 
 #### Getting started
 
