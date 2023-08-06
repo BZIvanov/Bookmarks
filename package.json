@@ -8,13 +8,13 @@
   "scripts": {
     "dev:prisma:dev": "prisma migrate dev",
     "dev:prisma:deploy": "prisma migrate deploy",
-    "dev:database:rm": "docker compose rm development-db -s -f -v",
-    "dev:database:up": "docker compose up development-db -d",
-    "dev:database:restart": "npm run dev:database:rm && npm run dev:database:up && sleep 2 && npm run dev:prisma:deploy",
+    "dev:db:remove": "docker compose rm development-db -s -f -v",
+    "dev:db:start": "docker compose up development-db -d",
+    "dev:db:restart": "npm run dev:db:remove && npm run dev:db:start && timeout /T 2 /NOBREAK && npm run dev:prisma:deploy",
     "test:prisma:deploy": "dotenv -e .env.test -- prisma migrate deploy",
-    "test:database:rm": "docker compose rm test-db -s -f -v",
-    "test:database:up": "docker compose up test-db -d",
-    "test:database:restart": "npm run test:database:rm && npm run test:database:up && sleep 2 && npm run test:prisma:deploy",
+    "test:db:remove": "docker compose rm test-db -s -f -v",
+    "test:db:start": "docker compose up test-db -d",
+    "test:db:restart": "npm run test:db:remove && npm run test:db:start && timeout /T 2 /NOBREAK && npm run test:prisma:deploy",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -27,8 +27,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "pretest:e2e": "npm run test:database:restart",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "pretest:e2e": "npm run test:db:restart",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "posttest:e2e": "npm run test:db:remove"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
