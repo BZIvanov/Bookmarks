@@ -7,7 +7,9 @@ import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), // ConfigModule is similar to our modules, but built by Nest, we need to install the package additionally
+    // ConfigModule is similar to our modules, but built by Nest, we need to install the package additionally
+    // we will provide ConfigModule as global module so we can use it in all our modules
+    ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     UserModule,
     BookmarkModule,

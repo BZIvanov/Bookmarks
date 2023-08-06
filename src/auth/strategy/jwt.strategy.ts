@@ -29,6 +29,7 @@ export class JwtStrategy extends PassportStrategy(
 
     delete user.password;
 
+    // the returned value will be attached on the Request as user prop
     return user;
   }
 }

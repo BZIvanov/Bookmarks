@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Prisma } from '@prisma/client';
 import * as argon from 'argon2';
 import { PrismaService } from '../prisma/prisma.service';
-import { AuthDto } from './dto';
+import { SignupDto, SigninDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
   ) {}
 
   // usually we will have the same named functions in the service and the controller. In the service is where we handle the business logic
-  async signup(dto: AuthDto) {
+  async signup(dto: SignupDto) {
     const hashedPassword = await argon.hash(dto.password);
 
     try {
@@ -23,14 +23,15 @@ export class AuthService {
         data: {
           email: dto.email,
           password: hashedPassword,
-          // firstName: dto.firstName,
-          // lastName: dto.lastName,
+          firstName: dto.firstName,
+          lastName: dto.lastName,
         },
       });
 
       return this.signToken(user.id, user.email);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        // check for duplicate field error, for example for email which is already used
         if (error.code === 'P2002') {
           throw new ForbiddenException('Invalid credentials');
         }
@@ -40,7 +41,7 @@ export class AuthService {
     }
   }
 
-  async signin(dto: AuthDto) {
+  async signin(dto: SigninDto) {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });

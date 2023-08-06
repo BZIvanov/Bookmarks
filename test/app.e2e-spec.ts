@@ -3,7 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as pactum from 'pactum';
 import { AppModule } from './../src/app.module';
 import { PrismaService } from '../src/prisma/prisma.service';
-import { AuthDto } from '../src/auth/dto';
+import { SignupDto } from '../src/auth/dto';
 import { EditUserDto } from '../src/user/dto';
 import { CreateBookmarkDto, EditBookmarkDto } from '../src/bookmark/dto';
 
@@ -32,11 +32,11 @@ describe('AppController (e2e)', () => {
 
   afterAll(() => app.close());
 
-  describe('Auth', () => {
-    const dto: AuthDto = { email: 'iva@mail.com', password: '12345' };
+  describe('Auth Module', () => {
+    const dto: SignupDto = { email: 'iva@mail.com', password: '12345' };
 
     describe('Signup', () => {
-      it('should not sign up with missign email with status 400', () => {
+      it('should not sign up with missing email and return status 400', () => {
         return pactum
           .spec()
           .post('/auth/signup')
@@ -54,7 +54,7 @@ describe('AppController (e2e)', () => {
       });
     });
 
-    describe('Signin', () => {
+    describe('Signin ', () => {
       it('should sign in with status 200', () => {
         return pactum
           .spec()
@@ -70,9 +70,9 @@ describe('AppController (e2e)', () => {
     });
   });
 
-  describe('User', () => {
+  describe('User Module', () => {
     describe('Get me', () => {
-      it('should get the the user status 200', () => {
+      it('should get the user with status code 200', () => {
         return pactum
           .spec()
           .get('/users/me')
@@ -97,7 +97,7 @@ describe('AppController (e2e)', () => {
     });
   });
 
-  describe('Bookmark', () => {
+  describe('Bookmark Module', () => {
     describe('Get empty bookmarks list', () => {
       it('should get empty list', () => {
         return pactum
